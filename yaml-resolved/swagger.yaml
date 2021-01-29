@@ -34,7 +34,8 @@ paths:
           default: 20
       - name: client_user_id
         in: query
-        description: Search users by `client_user_id` (external client id)
+        description: Search resource's requirements by client_user_id (external client
+          id)
         required: false
         style: form
         explode: true
@@ -128,7 +129,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddUser'
+              $ref: '#/components/schemas/UserForm'
         required: true
       responses:
         "201":
@@ -288,7 +289,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/AddUser'
+                $ref: '#/components/schemas/UserForm'
         required: true
       responses:
         "201":
@@ -336,7 +337,8 @@ paths:
           example: 123
       - name: per_page
         in: query
-        description: Number of results per page ("default:20, maximum:100")
+        description: Paginate the results according to `per_page` value ("default:20,
+          maximum:100")
         required: false
         style: form
         explode: true
@@ -389,7 +391,8 @@ paths:
       parameters:
       - name: per_page
         in: query
-        description: Number of results per page ("default:20, maximum:100")
+        description: Paginate the results according to `per_page` value ("default:20,
+          maximum:100")
         required: false
         style: form
         explode: true
@@ -399,7 +402,7 @@ paths:
           default: 20
       - name: client_user_id
         in: query
-        description: Search user's requirements by client_user_id (external client
+        description: Search resource's requirements by client_user_id (external client
           id)
         required: false
         style: form
@@ -585,7 +588,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddOffice'
+              $ref: '#/components/schemas/OfficeForm'
         required: true
       responses:
         "200":
@@ -668,7 +671,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddOffice'
+              $ref: '#/components/schemas/OfficeForm'
         required: true
       responses:
         "200":
@@ -771,7 +774,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddDepartment'
+              $ref: '#/components/schemas/DepartmentForm'
         required: true
       responses:
         "200":
@@ -854,7 +857,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddDepartment'
+              $ref: '#/components/schemas/DepartmentForm'
         required: true
       responses:
         "200":
@@ -961,7 +964,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddJobPosition'
+              $ref: '#/components/schemas/JobPositionForm'
         required: true
       responses:
         "200":
@@ -1044,7 +1047,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddJobPosition'
+              $ref: '#/components/schemas/JobPositionForm'
         required: true
       responses:
         "200":
@@ -1183,7 +1186,7 @@ components:
             type: integer
             description: Primary id
             example: 321
-      - $ref: '#/components/schemas/AddUser'
+      - $ref: '#/components/schemas/UserForm'
       - type: object
         properties:
           personal_email:
@@ -1199,7 +1202,7 @@ components:
             - cancelled
             - active
             - inactive
-    AddUser:
+    UserForm:
       required:
       - email
       - firstname
@@ -1255,8 +1258,8 @@ components:
             type: integer
             description: Primary id
             example: 12
-      - $ref: '#/components/schemas/AddOffice'
-    AddOffice:
+      - $ref: '#/components/schemas/OfficeForm'
+    OfficeForm:
       required:
       - city
       - country
@@ -1290,8 +1293,8 @@ components:
             type: integer
             description: Primary id
             example: 321
-      - $ref: '#/components/schemas/AddDepartment'
-    AddDepartment:
+      - $ref: '#/components/schemas/DepartmentForm'
+    DepartmentForm:
       required:
       - name
       type: object
@@ -1308,8 +1311,8 @@ components:
             type: integer
             description: Primary id
             example: 5
-      - $ref: '#/components/schemas/AddJobPosition'
-    AddJobPosition:
+      - $ref: '#/components/schemas/JobPositionForm'
+    JobPositionForm:
       required:
       - name
       type: object
@@ -1382,7 +1385,7 @@ components:
     body:
       type: object
       allOf:
-      - $ref: '#/components/schemas/AddUser'
+      - $ref: '#/components/schemas/UserForm'
     inline_response_201_1:
       properties:
         data:
@@ -1602,6 +1605,29 @@ components:
       schema:
         type: integer
         example: 123
+    PerPage:
+      name: per_page
+      in: query
+      description: Paginate the results according to `per_page` value ("default:20,
+        maximum:100")
+      required: false
+      style: form
+      explode: true
+      schema:
+        maximum: 100
+        type: integer
+        default: 20
+    ClientUserId:
+      name: client_user_id
+      in: query
+      description: Search resource's requirements by client_user_id (external client
+        id)
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        example: "123"
     name:
       name: name
       in: query
