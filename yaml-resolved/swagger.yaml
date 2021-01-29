@@ -126,7 +126,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserToUpdate'
+              $ref: '#/components/schemas/AddUser'
         required: true
       responses:
         "201":
@@ -189,6 +189,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     put:
@@ -210,7 +214,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserToUpdate'
+              $ref: '#/components/schemas/body'
         required: true
       responses:
         "200":
@@ -230,6 +234,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     delete:
@@ -260,6 +268,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
   /users/bulk:
@@ -274,7 +286,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/UserToUpdate'
+                $ref: '#/components/schemas/AddUser'
         required: true
       responses:
         "201":
@@ -359,6 +371,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/BadRequest'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
   /requirements:
@@ -481,6 +499,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: Requirement not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     delete:
@@ -511,6 +533,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: Requirement not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
   /offices:
@@ -616,6 +642,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: Office not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     put:
@@ -659,6 +689,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: Office not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     delete:
@@ -794,6 +828,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: Department not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     put:
@@ -837,6 +875,10 @@ paths:
                 $ref: '#/definitions/BadRequest'
         "404":
           description: Department not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     delete:
@@ -866,7 +908,11 @@ paths:
               schema:
                 $ref: '#/definitions/BadRequest'
         "404":
-          description: Requirement not found
+          description: Department not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
   /job-positions:
@@ -971,7 +1017,11 @@ paths:
               schema:
                 $ref: '#/definitions/BadRequest'
         "404":
-          description: Job position not found
+          description: Job Position not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     put:
@@ -1014,7 +1064,11 @@ paths:
               schema:
                 $ref: '#/definitions/BadRequest'
         "404":
-          description: Job position not found
+          description: Job Position not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
     delete:
@@ -1044,7 +1098,11 @@ paths:
               schema:
                 $ref: '#/definitions/BadRequest'
         "404":
-          description: Requirement not found
+          description: Job Position not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/404'
       security:
       - ApiKeyAuth: []
 components:
@@ -1244,28 +1302,33 @@ components:
     inline_response_201:
       properties:
         data:
-          $ref: '#/components/schemas/User'
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/User'
     inline_response_200_1:
       properties:
         data:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/User'
-            - type: object
-              properties:
-                office:
-                  type: object
-                  allOf:
-                  - $ref: '#/components/schemas/Office'
-                department:
-                  type: object
-                  allOf:
-                  - $ref: '#/components/schemas/Department'
-                position:
-                  type: object
-                  allOf:
-                  - $ref: '#/components/schemas/JobPosition'
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/User'
+          - type: object
+            properties:
+              office:
+                type: object
+                allOf:
+                - $ref: '#/components/schemas/Office'
+              department:
+                type: object
+                allOf:
+                - $ref: '#/components/schemas/Department'
+              job_position:
+                type: object
+                allOf:
+                - $ref: '#/components/schemas/JobPosition'
+    body:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/AddUser'
     inline_response_201_1:
       properties:
         data:
