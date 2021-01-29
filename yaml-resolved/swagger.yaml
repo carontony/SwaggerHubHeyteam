@@ -1109,6 +1109,56 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    PaginationLinks:
+      type: object
+      properties:
+        first:
+          type: string
+          description: First page url
+          example: https://heyteam/api/<resource>?page=1&...
+        last:
+          type: string
+          description: Last page url
+          example: https://heyteam/api/<resource>?page=4&...
+        prev:
+          type: string
+          description: Previous page url
+          example: https://heyteam/api/<resource>?page=1&...
+        next:
+          type: string
+          description: Next page url
+          example: https://heyteam/api/<resource>?page=3&...
+    PaginationMetas:
+      type: object
+      properties:
+        current_page:
+          type: integer
+          description: Current page number in the pagination
+          example: 2
+        from:
+          type: integer
+          description: Number of the first resource in the query result
+          example: 21
+        last_page:
+          type: integer
+          description: Last page number in the pagination
+          example: 4
+        path:
+          type: string
+          description: Endpoint url
+          example: https://heyteam/api/<resource>
+        per_page:
+          type: integer
+          description: Number of resources per page
+          example: 20
+        to:
+          type: integer
+          description: Number of last resource in the query result
+          example: 40
+        total:
+          type: integer
+          description: Total number of resources
+          example: 128
     Requirement:
       properties:
         id:
@@ -1298,9 +1348,11 @@ components:
                   allOf:
                   - $ref: '#/components/schemas/JobPosition'
         links:
-          $ref: '#/components/schemas/inline_response_200_links'
+          allOf:
+          - $ref: '#/components/schemas/PaginationLinks'
         meta:
-          $ref: '#/components/schemas/inline_response_200_meta'
+          allOf:
+          - $ref: '#/components/schemas/PaginationMetas'
     inline_response_201:
       properties:
         data:
@@ -1360,9 +1412,11 @@ components:
           items:
             $ref: '#/components/schemas/Requirement'
         links:
-          $ref: '#/components/schemas/inline_response_200_2_links'
+          allOf:
+          - $ref: '#/components/schemas/PaginationLinks'
         meta:
-          $ref: '#/components/schemas/inline_response_200_2_meta'
+          allOf:
+          - $ref: '#/components/schemas/PaginationMetas'
     inline_response_200_3:
       type: object
       properties:
@@ -1374,14 +1428,18 @@ components:
           items:
             $ref: '#/components/schemas/inline_response_200_3_data'
         links:
-          $ref: '#/components/schemas/inline_response_200_3_links'
+          allOf:
+          - $ref: '#/components/schemas/PaginationLinks'
         meta:
-          $ref: '#/components/schemas/inline_response_200_3_meta'
+          allOf:
+          - $ref: '#/components/schemas/PaginationMetas'
     inline_response_200_4:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Requirement'
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Requirement'
     inline_response_200_5:
       type: object
       properties:
@@ -1389,6 +1447,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Office'
+        links:
+          allOf:
+          - $ref: '#/components/schemas/PaginationLinks'
+        meta:
+          allOf:
+          - $ref: '#/components/schemas/PaginationMetas'
     inline_response_200_6:
       type: object
       properties:
@@ -1403,6 +1467,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Department'
+        links:
+          allOf:
+          - $ref: '#/components/schemas/PaginationLinks'
+        meta:
+          allOf:
+          - $ref: '#/components/schemas/PaginationMetas'
     inline_response_200_8:
       type: object
       properties:
@@ -1417,6 +1487,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/JobPosition'
+        links:
+          allOf:
+          - $ref: '#/components/schemas/PaginationLinks'
+        meta:
+          allOf:
+          - $ref: '#/components/schemas/PaginationMetas'
     inline_response_200_10:
       type: object
       properties:
@@ -1445,56 +1521,6 @@ components:
         last_update:
           type: string
           format: date-time
-    inline_response_200_links:
-      type: object
-      properties:
-        first:
-          type: string
-          description: First page url
-          example: https://heyteam/api/users?page=1&...
-        last:
-          type: string
-          description: Last page url
-          example: https://heyteam/api/users?page=4&...
-        prev:
-          type: string
-          description: Previous page url
-          example: https://heyteam/api/users?page=1&...
-        next:
-          type: string
-          description: Next page url
-          example: https://heyteam/api/users?page=3&...
-    inline_response_200_meta:
-      type: object
-      properties:
-        current_page:
-          type: integer
-          description: Current page number in the pagination
-          example: 2
-        from:
-          type: integer
-          description: Number of the first user in the query result
-          example: 21
-        last_page:
-          type: integer
-          description: Last page number in the pagination
-          example: 4
-        path:
-          type: string
-          description: Endpoint url
-          example: https://heyteam/api/users
-        per_page:
-          type: integer
-          description: Number of users per page
-          example: 20
-        to:
-          type: integer
-          description: Number of last user in the query result
-          example: 40
-        total:
-          type: integer
-          description: Total number of users
-          example: 128
     inline_response_201_1_data:
       type: object
       properties:
@@ -1533,56 +1559,6 @@ components:
           - client_user_id: 31
           items:
             $ref: '#/components/schemas/inline_response_409_data_failed'
-    inline_response_200_2_links:
-      type: object
-      properties:
-        first:
-          type: string
-          description: First page url
-          example: https://heyteam/api/users/123/requirements?page=1&...
-        last:
-          type: string
-          description: Last page url
-          example: https://heyteam/api/users/123/requirements?page=4&...
-        prev:
-          type: string
-          description: Previous page url
-          example: https://heyteam/api/users/123/requirements?page=1&...
-        next:
-          type: string
-          description: Next page url
-          example: https://heyteam/api/users/123/requirements?page=3&...
-    inline_response_200_2_meta:
-      type: object
-      properties:
-        current_page:
-          type: integer
-          description: Current page number in the pagination
-          example: 2
-        from:
-          type: integer
-          description: Number of the first requirement in the query result
-          example: 21
-        last_page:
-          type: integer
-          description: Last page number in the pagination
-          example: 4
-        path:
-          type: string
-          description: Endpoint url
-          example: https://heyteam/api/users/123/requirements
-        per_page:
-          type: integer
-          description: Number of requirements per page
-          example: 20
-        to:
-          type: integer
-          description: Number of last requirement in the query result
-          example: 40
-        total:
-          type: integer
-          description: Total number of requirements
-          example: 128
     inline_response_200_3_original_query:
       type: object
       properties:
@@ -1615,56 +1591,6 @@ components:
           enum:
           - text
           - file
-    inline_response_200_3_links:
-      type: object
-      properties:
-        first:
-          type: string
-          description: First page url
-          example: https://heyteam/api/requirements?page=1&...
-        last:
-          type: string
-          description: Last page url
-          example: https://heyteam/api/requirements?page=4&...
-        prev:
-          type: string
-          description: Previous page url
-          example: https://heyteam/api/requirements?page=1&...
-        next:
-          type: string
-          description: Next page url
-          example: https://heyteam/api/requirements?page=3&...
-    inline_response_200_3_meta:
-      type: object
-      properties:
-        current_page:
-          type: integer
-          description: Current page number in the pagination
-          example: 2
-        from:
-          type: integer
-          description: Number of the first requirement in the query result
-          example: 21
-        last_page:
-          type: integer
-          description: Last page number in the pagination
-          example: 4
-        path:
-          type: string
-          description: Endpoint url
-          example: https://heyteam/api/requirements
-        per_page:
-          type: integer
-          description: Number of requirements per page
-          example: 20
-        to:
-          type: integer
-          description: Number of last requirement in the query result
-          example: 40
-        total:
-          type: integer
-          description: Total number of requirements
-          example: 128
   parameters:
     idPath:
       name: id
